@@ -30,8 +30,8 @@ namespace SampleFluxReactDotNet.Web
                       "~/Content/site.css"));
 
             bundles.Add(new JsxBundle("~/bundles/main").Include(
-                "~/Scripts/Jsx/Comments.jsx",
-                "~/Scripts/showdown.js"
+                "~/Scripts/showdown.js",
+                "~/Scripts/Jsx/Comments.jsx"
             ));
 
             // Set EnableOptimizations to false for debugging. For more information,
