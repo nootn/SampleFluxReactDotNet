@@ -4,22 +4,22 @@ using SampleFluxReactDotNet.Web.Models;
 
 namespace SampleFluxReactDotNet.Web.Controllers
 {
-    public class HomeController : Controller
+    public partial class HomeController : Controller
     {
-        private static List<CommentModel> _comments = new List<CommentModel>();
+        private static List<CommentModel> _comments = new List<CommentModel>() { new CommentModel { Author = "[unknown]", Text = "The *first* comment!" } };
 
-        public ActionResult Index()
+        public virtual ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult Comments()
+        public virtual ActionResult Comments()
         {
             return Json(_comments, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public ActionResult AddComment(CommentModel comment)
+        public virtual ActionResult AddComment(CommentModel comment)
         {
             _comments.Add(comment);
             return Content("Success :)");
