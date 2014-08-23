@@ -6,6 +6,8 @@ namespace SampleFluxReactDotNet.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private static List<CommentModel> _comments = new List<CommentModel>();
+
         public ActionResult Index()
         {
             return View();
@@ -13,26 +15,14 @@ namespace SampleFluxReactDotNet.Web.Controllers
 
         public ActionResult Comments()
         {
-            var comments = new List<CommentModel>
-            {
-                new CommentModel
-                {
-                    Author = "Daniel Lo Nigro",
-                    Text = "Hello ReactJS.NET World!"
-                },
-                new CommentModel
-                {
-                    Author = "Pete Hunt",
-                    Text = "This is one comment"
-                },
-                new CommentModel
-                {
-                    Author = "Jordan Walke",
-                    Text = "This is *another* comment"
-                },
-            };
+            return Json(_comments, JsonRequestBehavior.AllowGet);
+        }
 
-            return Json(comments, JsonRequestBehavior.AllowGet);
+        [HttpPost]
+        public ActionResult AddComment(CommentModel comment)
+        {
+            _comments.Add(comment);
+            return Content("Success :)");
         }
     }
 }
