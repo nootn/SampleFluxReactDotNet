@@ -1,0 +1,21 @@
+{
+    "environmentSettings": {
+        "webSite": {
+            "name": "SampleFluxReactDotNet",
+            "location": "Southeast Asia"
+        },
+        "databases": [
+            {
+                "connectionStringName": "DefaultConnection",
+                "databaseName": "SampleFluxReactDotNet_db",
+                "serverName": "igb8fjgndx",
+                "user": "nootn",
+                "password": "",
+                "edition": "",
+                "size": "",
+                "collation": "",
+                "location": "East Asia"
+            }
+        ]
+    }
+}
