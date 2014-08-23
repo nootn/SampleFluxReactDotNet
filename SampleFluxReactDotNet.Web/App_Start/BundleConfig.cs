@@ -1,5 +1,7 @@
-﻿using System.Web;
+﻿using System.Drawing;
+using System.Web;
 using System.Web.Optimization;
+using System.Web.Optimization.React;
 
 namespace SampleFluxReactDotNet.Web
 {
@@ -27,9 +29,14 @@ namespace SampleFluxReactDotNet.Web
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
+            bundles.Add(new JsxBundle("~/bundles/main").Include(
+                "~/Scripts/Jsx/Comments.jsx",
+                "~/Scripts/showdown.js"
+            ));
+
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862
-            BundleTable.EnableOptimizations = true;
+            //BundleTable.EnableOptimizations = true;
         }
     }
 }
