@@ -10,7 +10,7 @@ namespace SampleFluxReactDotNet.Web.Controllers
 
         public virtual ActionResult Index()
         {
-            return View();
+            return View(_comments);
         }
 
         public virtual ActionResult Comments()

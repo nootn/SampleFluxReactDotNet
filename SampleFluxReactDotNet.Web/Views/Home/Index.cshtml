@@ -1,4 +1,6 @@
-﻿@{
+﻿@using SampleFluxReactDotNet.Web.Controllers
+@model IEnumerable<SampleFluxReactDotNet.Web.Models.CommentModel>
+@{
     Layout = null;
 }
 <!DOCTYPE html>
@@ -7,8 +9,15 @@
     <title>Sample SPA!</title>
 </head>
 <body>
-    <div id="comments"></div>
+    @Html.React("CommentBox", new
+    {
+        initialData = Model,
+        url = Url.Action(HomeController.ActionNameConstants.Comments),
+        submitUrl = Url.Action(HomeController.ActionNameConstants.AddComment),
+        pollInterval = 2000,
+    })
     <script src="http://fb.me/react-0.10.0.js"></script>
     @Scripts.Render("~/bundles/main")
+    @Html.ReactInitJavaScript()
 </body>
 </html>
