@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using SampleFluxReactDotNet.Web.Models;
 
 namespace SampleFluxReactDotNet.Web.Controllers
 {
@@ -13,18 +11,28 @@ namespace SampleFluxReactDotNet.Web.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Comments()
         {
-            ViewBag.Message = "Your application description page.";
+            var comments = new List<CommentModel>
+            {
+                new CommentModel
+                {
+                    Author = "Daniel Lo Nigro",
+                    Text = "Hello ReactJS.NET World!"
+                },
+                new CommentModel
+                {
+                    Author = "Pete Hunt",
+                    Text = "This is one comment"
+                },
+                new CommentModel
+                {
+                    Author = "Jordan Walke",
+                    Text = "This is *another* comment"
+                },
+            };
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            return Json(comments, JsonRequestBehavior.AllowGet);
         }
     }
 }
