@@ -1,95 +1,104 @@
 ﻿/** @jsx React.DOM */
+var Jsx = Jsx || {};
 
-var actions = {
-    addTodo: FluxStores.TodoStore.actions.addTodo,
-    toggleTodo: FluxStores.TodoStore.actions.toggleTodo,
-    clearTodos: FluxStores.TodoStore.actions.clearTodos,
-};
+Jsx.Comments = (function () {
 
-var stores = {
-    TodoStore: FluxStores.TodoStore.store,
-};
+    var actions = {
+        addTodo: FluxStores.TodoStore.actions.addTodo,
+        toggleTodo: FluxStores.TodoStore.actions.toggleTodo,
+        clearTodos: FluxStores.TodoStore.actions.clearTodos,
+    };
 
-var flux = new Fluxxor.Flux(stores, actions);
-var FluxMixin = Fluxxor.FluxMixin(React),
-    FluxChildMixin = Fluxxor.FluxChildMixin(React),
-    StoreWatchMixin = Fluxxor.StoreWatchMixin;
+    var stores = {
+        TodoStore: FluxStores.TodoStore.store,
+    };
 
-var TodoList = React.createClass({
-    mixins: [FluxMixin, StoreWatchMixin("TodoStore")],
+    var flux = new Fluxxor.Flux(stores, actions);
+    var FluxMixin = Fluxxor.FluxMixin(React),
+        FluxChildMixin = Fluxxor.FluxChildMixin(React),
+        StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
-    getInitialState: function() {
-        return { newTodoText: "" };
-    },
+    var TodoList = React.createClass({
+        mixins: [FluxMixin, StoreWatchMixin("TodoStore")],
 
-    getStateFromFlux: function() {
-        var flux = this.getFlux();
-        // Our entire state is made up of the TodoStore data. In a larger
-        // application, you will likely return data from multiple stores, e.g.:
-        //
-        //   return {
-        //     todoData: flux.store("TodoStore").getState(),
-        //     userData: flux.store("UserStore").getData(),
-        //     fooBarData: flux.store("FooBarStore").someMoreData()
-        //   };
-        return flux.store("TodoStore").getState();
-    },
+        getInitialState: function() {
+            return { newTodoText: "" };
+        },
 
-    render: function() {
-        return (
-          <div>
-            <h1>Todos</h1>
-            <ul>
-              {this.state.todos.map(function(todo, i) {
-                  return <li key={i}><TodoItem todo={todo} /></li>;
-              })}
-            </ul>
-            <form onSubmit={this.onSubmitForm}>
-            <input type="text" size="30" placeholder="New Todo"
-                 value={this.state.newTodoText}
-                 onChange={this.handleTodoTextChange} />
-          <input type="submit" value="Add Todo" />
-        </form>
-        <button onClick={this.clearCompletedTodos}>Clear Completed</button>
-      </div>
-    );
-    },
+        getStateFromFlux: function() {
+            var flux = this.getFlux();
+            // Our entire state is made up of the TodoStore data. In a larger
+            // application, you will likely return data from multiple stores, e.g.:
+            //
+            //   return {
+            //     todoData: flux.store("TodoStore").getState(),
+            //     userData: flux.store("UserStore").getData(),
+            //     fooBarData: flux.store("FooBarStore").someMoreData()
+            //   };
+            return flux.store("TodoStore").getState();
+        },
 
-    handleTodoTextChange: function(e) {
-        this.setState({newTodoText: e.target.value});
-    },
+        render: function() {
+            return (
+              <div>
+                <h1>Todos</h1>
+                <ul>
+                  {this.state.todos.map(function(todo, i) {
+                      return <li key={i}><TodoItem todo={todo} /></li>;
+                  })}
+                </ul>
+                <form onSubmit={this.onSubmitForm}>
+                <input type="text" size="30" placeholder="New Todo"
+                     value={this.state.newTodoText}
+                     onChange={this.handleTodoTextChange} />
+              <input type="submit" value="Add Todo" />
+            </form>
+            <button onClick={this.clearCompletedTodos}>Clear Completed</button>
+          </div>
+        );
+        },
 
-    onSubmitForm: function(e) {
-        e.preventDefault();
-        if (this.state.newTodoText.trim()) {
-            this.getFlux().actions.addTodo(this.state.newTodoText);
-            this.setState({newTodoText: ""});
+        handleTodoTextChange: function(e) {
+            this.setState({newTodoText: e.target.value});
+        },
+
+        onSubmitForm: function(e) {
+            e.preventDefault();
+            if (this.state.newTodoText.trim()) {
+                this.getFlux().actions.addTodo(this.state.newTodoText);
+                this.setState({newTodoText: ""});
+            }
+        },
+
+        clearCompletedTodos: function(e) {
+            this.getFlux().actions.clearTodos();
         }
-    },
+    });
 
-    clearCompletedTodos: function(e) {
-        this.getFlux().actions.clearTodos();
-    }
-});
+    var TodoItem = React.createClass({
+        mixins: [FluxChildMixin],
 
-var TodoItem = React.createClass({
-    mixins: [FluxChildMixin],
+        propTypes: {
+            todo: React.PropTypes.object.isRequired
+        },
 
-    propTypes: {
-        todo: React.PropTypes.object.isRequired
-    },
+        render: function() {
+            var style = {
+                textDecoration: this.props.todo.complete ? "line-through" : ""
+            };
 
-    render: function() {
-        var style = {
-            textDecoration: this.props.todo.complete ? "line-through" : ""
-        };
+            return <span style={style} onClick={this.onClick}>{this.props.todo.text}</span>;
+        },
 
-        return <span style={style} onClick={this.onClick}>{this.props.todo.text}</span>;
-    },
+        onClick: function() {
+            this.getFlux().actions.toggleTodo(this.props.todo);
+        }
+    });
 
-    onClick: function() {
-        this.getFlux().actions.toggleTodo(this.props.todo);
-    }
-});
+    React.renderComponent(<TodoList flux={flux} />, document.getElementById("todoList"));
 
-React.renderComponent(<TodoList flux={flux} />, document.getElementById("todoList"));
+    //Decide what is public
+    return {
+        flux: flux,
+    };
+})();
