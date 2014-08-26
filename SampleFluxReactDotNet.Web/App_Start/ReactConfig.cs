@@ -15,9 +15,9 @@ namespace SampleFluxReactDotNet.Web
 			// your components as well as all of their dependencies.
 			// See http://reactjs.net/ for more information.
 
-            ReactSiteConfiguration.Configuration
-                .AddScript("~/Scripts/showdown.js")
-                .AddScript("~/Scripts/Jsx/Comments.jsx");
+            //ReactSiteConfiguration.Configuration
+            //    .AddScript("~/Scripts/showdown.js")
+            //    .AddScript("~/Scripts/Jsx/Comments.jsx");
 		}
 	}
 }

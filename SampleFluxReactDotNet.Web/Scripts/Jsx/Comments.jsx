@@ -76,10 +76,11 @@ var CommentBox = React.createClass({
 		xhr.send(data);
 	},
 	getInitialState: function() {
-		return { data: this.props.initialData };
+	    return {data: []};
 	},
-	componentDidMount: function() {
-		window.setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+	componentWillMount: function() {
+	    this.loadCommentsFromServer();
+	    window.setInterval(this.loadCommentsFromServer, this.props.pollInterval);
 	},
 	render: function() {
 		return (
@@ -92,3 +93,7 @@ var CommentBox = React.createClass({
 	}
 });
 
+React.renderComponent(
+  <CommentBox url="/Home/Comments" submitUrl="/Home/AddComment" pollInterval={2000} />,
+  document.getElementById('comments')
+);
