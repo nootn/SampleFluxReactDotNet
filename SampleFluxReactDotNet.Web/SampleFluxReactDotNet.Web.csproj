@@ -228,8 +228,13 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\SampleFluxReactDotNet.pubxml" />
+    <Content Include="Scripts\Fluxxor_1.3.2\fluxxor.js.map" />
+    <Content Include="Scripts\Fluxxor_1.3.2\fluxxor.min.js.map" />
     <None Include="Scripts\Jsx\Comments.jsx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Fluxxor_1.3.2\fluxxor.js" />
+    <Content Include="Scripts\Fluxxor_1.3.2\fluxxor.min.js" />
+    <Content Include="Scripts\Fluxxor_1.3.2\_readme.txt" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -243,6 +248,7 @@
     <Content Include="Scripts\showdown.js" />
     <Content Include="Scripts\showdown.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Scripts\Jsx\Todo.jsx" />
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
