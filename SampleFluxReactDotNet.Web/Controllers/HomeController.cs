@@ -27,10 +27,6 @@ namespace SampleFluxReactDotNet.Web.Controllers
             comment.Id = Guid.NewGuid().ToString();
             _comments.Add(comment);
 
-            //Tell all clients that the comments have been updated!
-            var hub = GlobalHost.ConnectionManager.GetHubContext<ServerEventsHub>();
-            hub.Clients.All.CommentsUpdated(DateTimeOffset.Now);
-
             return Content("Success :)");
         }
     }

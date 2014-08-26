@@ -24,6 +24,9 @@ FluxStores.CommentsStore = (function () {
             var xhr = new XMLHttpRequest();
             xhr.open('post', '/Home/AddComment', true);
             xhr.onload = function () {
+                //After we are done adding, tell everyone to update
+                var hub = $.connection.ServerEventsHub;
+                hub.server.commentsUpdated();
             }.bind(this);
             xhr.send(data);
         },

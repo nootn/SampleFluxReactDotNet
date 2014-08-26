@@ -82,12 +82,7 @@ Jsx.Comments = (function () {
             var flux = this.getFlux();
             return flux.store("CommentsStore").getState();
         },
-        reload: function(){
-            this.getFlux().actions.loadComments();
-        },
         componentWillMount: function() {
-            //this.getFlux().actions.loadComments();
-            //window.setInterval(this.getFlux().actions.loadComments, this.props.pollInterval);
         },
         render: function() {
             return (
