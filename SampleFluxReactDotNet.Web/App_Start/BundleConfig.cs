@@ -32,6 +32,11 @@ namespace SampleFluxReactDotNet.Web
             bundles.Add(new JsxBundle("~/bundles/main").Include(
                 "~/Scripts/showdown.js",
                 "~/Scripts/Fluxxor_1.3.2/fluxxor.js",
+
+                //Add all the stores here
+                "~/Scripts/FluxStores/TodoStore.js",
+
+                //Add all the JSX's here
                 "~/Scripts/Jsx/Comments.jsx",
                 "~/Scripts/Jsx/Todo.jsx"
             ));

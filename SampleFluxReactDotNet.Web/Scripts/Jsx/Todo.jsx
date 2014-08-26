@@ -1,71 +1,21 @@
 ﻿/** @jsx React.DOM */
 
-var constants = {
-    ADD_TODO: "ADD_TODO",
-    TOGGLE_TODO: "TOGGLE_TODO",
-    CLEAR_TODOS: "CLEAR_TODOS"
-};
-
-var TodoStore = Fluxxor.createStore({
-    initialize: function() {
-        this.todos = [];
-
-        this.bindActions(
-          constants.ADD_TODO, this.onAddTodo,
-          constants.TOGGLE_TODO, this.onToggleTodo,
-          constants.CLEAR_TODOS, this.onClearTodos
-        );
-    },
-
-    onAddTodo: function(payload) {
-        this.todos.push({text: payload.text, complete: false});
-        this.emit("change");
-    },
-
-    onToggleTodo: function(payload) {
-        payload.todo.complete = !payload.todo.complete;
-        this.emit("change");
-    },
-
-    onClearTodos: function() {
-        this.todos = this.todos.filter(function(todo) {
-            return !todo.complete;
-        });
-        this.emit("change");
-    },
-
-    getState: function() {
-        return {
-            todos: this.todos
-        };
-    }
-});
-
 var actions = {
-    addTodo: function(text) {
-        this.dispatch(constants.ADD_TODO, {text: text});
-    },
-
-    toggleTodo: function(todo) {
-        this.dispatch(constants.TOGGLE_TODO, {todo: todo});
-    },
-
-    clearTodos: function() {
-        this.dispatch(constants.CLEAR_TODOS);
-    }
+    addTodo: FluxStores.TodoStore.actions.addTodo,
+    toggleTodo: FluxStores.TodoStore.actions.toggleTodo,
+    clearTodos: FluxStores.TodoStore.actions.clearTodos,
 };
 
 var stores = {
-    TodoStore: new TodoStore()
+    TodoStore: FluxStores.TodoStore.store,
 };
 
 var flux = new Fluxxor.Flux(stores, actions);
-
 var FluxMixin = Fluxxor.FluxMixin(React),
     FluxChildMixin = Fluxxor.FluxChildMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
-var Application = React.createClass({
+var TodoList = React.createClass({
     mixins: [FluxMixin, StoreWatchMixin("TodoStore")],
 
     getInitialState: function() {
@@ -102,23 +52,23 @@ var Application = React.createClass({
         <button onClick={this.clearCompletedTodos}>Clear Completed</button>
       </div>
     );
-},
+    },
 
-handleTodoTextChange: function(e) {
-    this.setState({newTodoText: e.target.value});
-},
+    handleTodoTextChange: function(e) {
+        this.setState({newTodoText: e.target.value});
+    },
 
-onSubmitForm: function(e) {
-    e.preventDefault();
-    if (this.state.newTodoText.trim()) {
-        this.getFlux().actions.addTodo(this.state.newTodoText);
-        this.setState({newTodoText: ""});
+    onSubmitForm: function(e) {
+        e.preventDefault();
+        if (this.state.newTodoText.trim()) {
+            this.getFlux().actions.addTodo(this.state.newTodoText);
+            this.setState({newTodoText: ""});
+        }
+    },
+
+    clearCompletedTodos: function(e) {
+        this.getFlux().actions.clearTodos();
     }
-},
-
-clearCompletedTodos: function(e) {
-    this.getFlux().actions.clearTodos();
-}
 });
 
 var TodoItem = React.createClass({
@@ -141,4 +91,4 @@ var TodoItem = React.createClass({
     }
 });
 
-React.renderComponent(<Application flux={flux} />, document.getElementById("app"));
+React.renderComponent(<TodoList flux={flux} />, document.getElementById("todoList"));
