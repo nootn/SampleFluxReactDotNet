@@ -34,11 +34,10 @@ namespace SampleFluxReactDotNet.Web
                 "~/Scripts/Fluxxor_1.3.2/fluxxor.js",
 
                 //Add all the stores here
-                "~/Scripts/FluxStores/TodoStore.js",
+                "~/Scripts/FluxStores/*.js",
 
                 //Add all the JSX's here
-                "~/Scripts/Jsx/Comments.jsx",
-                "~/Scripts/Jsx/Todo.jsx"
+                "~/Scripts/Jsx/*.jsx"
             ));
 
             // Set EnableOptimizations to false for debugging. For more information,

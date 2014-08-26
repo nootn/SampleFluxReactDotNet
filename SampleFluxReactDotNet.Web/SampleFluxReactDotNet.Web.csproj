@@ -228,6 +228,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\SampleFluxReactDotNet.pubxml" />
+    <Content Include="Scripts\FluxStores\CommentsStore.js" />
     <Content Include="Scripts\FluxStores\TodoStore.js" />
     <Content Include="Scripts\Fluxxor_1.3.2\fluxxor.js.map" />
     <Content Include="Scripts\Fluxxor_1.3.2\fluxxor.min.js.map" />
