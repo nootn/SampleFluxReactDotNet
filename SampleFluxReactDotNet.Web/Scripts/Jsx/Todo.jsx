@@ -1,10 +1,5 @@
 ﻿/** @jsx React.DOM */
 
-var React = require("react"),
-    Fluxxor = require("../../../");
-
-window.React = React;
-
 var constants = {
     ADD_TODO: "ADD_TODO",
     TOGGLE_TODO: "TOGGLE_TODO",
@@ -65,8 +60,6 @@ var stores = {
 };
 
 var flux = new Fluxxor.Flux(stores, actions);
-
-window.flux = flux;
 
 var FluxMixin = Fluxxor.FluxMixin(React),
     FluxChildMixin = Fluxxor.FluxChildMixin(React),

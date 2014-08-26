@@ -32,7 +32,8 @@ namespace SampleFluxReactDotNet.Web
             bundles.Add(new JsxBundle("~/bundles/main").Include(
                 "~/Scripts/showdown.js",
                 "~/Scripts/Fluxxor_1.3.2/fluxxor.js",
-                "~/Scripts/Jsx/Comments.jsx"
+                "~/Scripts/Jsx/Comments.jsx",
+                "~/Scripts/Jsx/Todo.jsx"
             ));
 
             // Set EnableOptimizations to false for debugging. For more information,
