@@ -30,8 +30,7 @@ namespace SampleFluxReactDotNet.Web
                       "~/Content/site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/signalr").Include(
-                        "~/Scripts/jquery.signalR-{version}.js",
-                        "~/signalr/hubs"));
+                        "~/Scripts/jquery.signalR-{version}.js"));
 
             bundles.Add(new JsxBundle("~/bundles/main").Include(
                 "~/Scripts/showdown.js",
@@ -41,7 +40,10 @@ namespace SampleFluxReactDotNet.Web
                 "~/Scripts/FluxStores/*.js",
 
                 //Add all the JSX's here
-                "~/Scripts/Jsx/*.jsx"
+                "~/Scripts/Jsx/*.jsx",
+
+                //Add other scripts here
+                "~/Scripts/ServerEvents/HandleServerEvents.js"
             ));
 
             // Set EnableOptimizations to false for debugging. For more information,

@@ -1,7 +1,7 @@
 ﻿/** @jsx React.DOM */
 var Jsx = Jsx || {};
 
-Jsx.Comments = (function () {
+Jsx.Todo = (function () {
 
     var actions = {
         addTodo: FluxStores.TodoStore.actions.addTodo,

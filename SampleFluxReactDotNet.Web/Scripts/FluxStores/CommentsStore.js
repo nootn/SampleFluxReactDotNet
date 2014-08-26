@@ -24,8 +24,6 @@ FluxStores.CommentsStore = (function () {
             var xhr = new XMLHttpRequest();
             xhr.open('post', '/Home/AddComment', true);
             xhr.onload = function () {
-                //Force a load straight away - remove this for now as it may be double the work when SinalR is introduced
-                //this.onLoadDataFromServer();
             }.bind(this);
             xhr.send(data);
         },
