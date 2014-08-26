@@ -29,6 +29,10 @@ namespace SampleFluxReactDotNet.Web
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
+            bundles.Add(new ScriptBundle("~/bundles/signalr").Include(
+                        "~/Scripts/jquery.signalR-{version}.js",
+                        "~/signalr/hubs"));
+
             bundles.Add(new JsxBundle("~/bundles/main").Include(
                 "~/Scripts/showdown.js",
                 "~/Scripts/Fluxxor_1.3.2/fluxxor.js",
