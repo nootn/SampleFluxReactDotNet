@@ -32,18 +32,18 @@ namespace SampleFluxReactDotNet.Web
             bundles.Add(new ScriptBundle("~/bundles/signalr").Include(
                         "~/Scripts/jquery.signalR-{version}.js"));
 
-            bundles.Add(new JsxBundle("~/bundles/main").Include(
+            bundles.Add(new ScriptBundle("~/bundles/main").Include(
                 "~/Scripts/showdown.js",
                 "~/Scripts/Fluxxor_1.3.2/fluxxor.js",
 
-                //Add all the stores here
                 "~/Scripts/FluxStores/*.js",
 
-                //Add all the JSX's here
-                "~/Scripts/Jsx/*.jsx",
-
-                //Add other scripts here
                 "~/Scripts/ServerEvents/HandleServerEvents.js"
+            ));
+
+            bundles.Add(new JsxBundle("~/bundles/jsx").Include(
+                //Add all the JSX's here
+                "~/Scripts/Jsx/*.jsx"
             ));
 
             // Set EnableOptimizations to false for debugging. For more information,
