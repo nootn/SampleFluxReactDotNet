@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
 using SampleFluxReactDotNet.Web.Hubs;
 using SampleFluxReactDotNet.Web.Models;
 
@@ -26,6 +27,10 @@ namespace SampleFluxReactDotNet.Web.Controllers
         {
             comment.Id = Guid.NewGuid().ToString();
             _comments.Add(comment);
+
+            var hubContext = GlobalHost.ConnectionManager.GetHubContext<ServerEventsHub>();
+            var now = DateTimeOffset.Now;
+            hubContext.Clients.All.CommentsUpdated(now);
 
             return Content("Success :)");
         }
