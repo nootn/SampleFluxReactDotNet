@@ -49,20 +49,17 @@ Jsx.Comments = (function () {
     var CommentForm = React.createClass({
         handleSubmit: function(e) {
             e.preventDefault();
-            var author = this.refs.author.getDOMNode().value.trim();
             var text = this.refs.text.getDOMNode().value.trim();
-            if (!text || !author) {
+            if (!text) {
                 return false;
             }
-            this.props.onCommentSubmit({author: author, text: text});
-            this.refs.author.getDOMNode().value = '';
+            this.props.onCommentSubmit({text: text});
             this.refs.text.getDOMNode().value = '';
             return false;
         },
         render: function() {
             return (
 			    <form className="commentForm" onSubmit={this.handleSubmit}>
-			    <input type="text" placeholder="Your name" ref="author" />
 			    <input type="text" placeholder="Say something..." ref="text" />
 			    <input type="submit" value="Post" />
 			    </form>
@@ -73,7 +70,7 @@ Jsx.Comments = (function () {
     var CommentBox = React.createClass({
         mixins: [FluxMixin, StoreWatchMixin("CommentsStore")],
         handleCommentSubmit: function(comment) {
-            this.getFlux().actions.addComment(comment.author, comment.text);
+            this.getFlux().actions.addComment(comment.text);
         },
         getInitialState: function() {
             return {};

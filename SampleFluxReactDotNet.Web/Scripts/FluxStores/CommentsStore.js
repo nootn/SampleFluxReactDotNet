@@ -18,7 +18,6 @@ FluxStores.CommentsStore = (function () {
 
         onAddComment: function (payload) {
             var data = new FormData();
-            data.append('Author', payload.author);
             data.append('Text', payload.text);
 
             var xhr = new XMLHttpRequest();
@@ -50,8 +49,8 @@ FluxStores.CommentsStore = (function () {
     });
 
     var actions = {
-        addComment: function (author, text) {
-            this.dispatch(constants.ADD_COMMENT, { author: author, text: text });
+        addComment: function (text) {
+            this.dispatch(constants.ADD_COMMENT, { text: text });
         },
         loadComments: function () {
             this.dispatch(constants.LOAD_COMMENTS, {});
