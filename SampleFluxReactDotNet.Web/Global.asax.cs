@@ -10,7 +10,6 @@ using System.Web.Routing;
 using Autofac;
 using Autofac.Builder;
 using Autofac.Integration.Mvc;
-using Autofac.Integration.SignalR;
 using AutofacContrib.DynamicProxy;
 using DotNetAppStarterKit.Core.Command;
 using DotNetAppStarterKit.Core.Event;
@@ -19,26 +18,20 @@ using DotNetAppStarterKit.Web.Caching;
 using DotNetAppStarterKit.Web.Logging;
 using DotNetAppStarterKit.Web.Security;
 using EventStore.ClientAPI;
-using Microsoft.AspNet.SignalR;
-using SampleFluxReactDotNet.Core.Command.Interface;
 using SampleFluxReactDotNet.Core.EventStore;
+using SampleFluxReactDotNet.Core.EventStore.Interface;
 using SampleFluxReactDotNet.Web.Application.Interceptors;
-using AutofacDependencyResolver = Autofac.Integration.Mvc.AutofacDependencyResolver;
 
 namespace SampleFluxReactDotNet.Web
 {
     public class MvcApplication : HttpApplication
     {
-        private static IEventStoreConnection conn;
-
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            conn = EventStoreConnection.Create(new IPEndPoint(IPAddress.Loopback, 1113));
 
             ConfigureIoc();
         }
@@ -52,13 +45,11 @@ namespace SampleFluxReactDotNet.Web
             builder.RegisterControllers(webAssembly);
             builder.RegisterFilterProvider();
             builder.RegisterModule(new AutofacWebTypesModule());
-            builder.RegisterHubs(webAssembly);
 
             //Components defined within this application
             builder.RegisterType<LoggerInterceptor>().AsSelf();
-            builder.RegisterInstance(conn)
-                .As<IEventStoreConnection>().SingleInstance();
-                //.EnableInterfaceInterceptors().InterceptedBy(typeof (LoggerInterceptor));
+            builder.RegisterType<EventStoreProxy>().AsImplementedInterfaces().SingleInstance();
+            //.EnableInterfaceInterceptors().InterceptedBy(typeof (LoggerInterceptor));
 
             //DotNetAppStarterKit components
             builder.RegisterType<User>().AsImplementedInterfaces().InstancePerRequest();
@@ -102,7 +93,7 @@ namespace SampleFluxReactDotNet.Web
                         _.InstancePerRequest()
                             .EnableInterfaceInterceptors()
                             .InterceptedBy(typeof (LoggerInterceptor)));
-            builder.RegisterGeneric(typeof (EventPublisher<>)).AsImplementedInterfaces().InstancePerRequest();
+            builder.RegisterGeneric(typeof (EventPublisher<>)).AsImplementedInterfaces().InstancePerDependency();
             builder.RegisterGeneric(typeof (EventSubscribersProvider<>))
                 .AsImplementedInterfaces()
                 .InstancePerRequest();
@@ -118,7 +109,6 @@ namespace SampleFluxReactDotNet.Web
             {
                 var container = builder.Build();
                 DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
-                GlobalHost.DependencyResolver = new Autofac.Integration.SignalR.AutofacDependencyResolver(container);
             }
             catch (Exception ex)
             {
@@ -130,6 +120,9 @@ namespace SampleFluxReactDotNet.Web
                 }
                 throw;
             }
+
+            //Make sure the event store connection works early
+            var prox = DependencyResolver.Current.GetService<IEventStoreProxy>();
         }
 
         private static bool IsAssignableToGenericType(Type givenType, Type genericType)

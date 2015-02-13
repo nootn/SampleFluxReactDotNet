@@ -2,6 +2,7 @@
 using DotNetAppStarterKit.Core.Query;
 using EventStore.ClientAPI;
 using SampleFluxReactDotNet.Core.EventStore;
+using SampleFluxReactDotNet.Core.EventStore.Interface;
 using SampleFluxReactDotNet.Core.EventStore.Stream;
 using SampleFluxReactDotNet.Core.Query.Interface;
 using SampleFluxReactDotNet.Core.View.Comment;
@@ -10,11 +11,11 @@ namespace SampleFluxReactDotNet.Core.Query
 {
     public class GetComments : CachedQueryBase<CommentListView>, IGetComments
     {
-        public readonly IEventStoreConnection EventStoreConn;
+        public readonly IEventStoreProxy EventStore;
 
-        public GetComments(IEventStoreConnection eventStoreConn)
+        public GetComments(IEventStoreProxy eventStore)
         {
-            EventStoreConn = eventStoreConn;
+            EventStore = eventStore;
         }
 
         public override CommentListView Execute()
@@ -24,10 +25,8 @@ namespace SampleFluxReactDotNet.Core.Query
                 CommentDetails = new List<CommentDetailView>(),
             };
 
-            EventStoreConn.ConnectAsync().Wait();
             var slice =
-                EventStoreConn.ReadStreamEventsForwardAsync(CommentCreatedEvent.StreamName, StreamPosition.Start,
-                    int.MaxValue, false).Result;
+                EventStore.ReadStreamEventsForward(CommentCreatedEvent.StreamName, StreamPosition.Start, int.MaxValue);
             foreach (var currEvent in slice.Events)
             {
                 var item = ManipulateEvent.DeserializeEvent(currEvent.OriginalEvent.Metadata,
