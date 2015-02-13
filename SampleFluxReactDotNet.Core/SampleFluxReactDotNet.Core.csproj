@@ -87,7 +87,6 @@
     <Compile Include="Query\Interface\IGetComments.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="SubscriptionEvents\GetCommentsHasNewDataSubscriptionEvent.cs" />
     <Compile Include="EventStore\ManipulateEvent.cs" />
     <Compile Include="EventStore\Stream\CommentCreatedEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

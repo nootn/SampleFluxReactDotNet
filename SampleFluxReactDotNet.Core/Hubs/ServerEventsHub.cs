@@ -8,20 +8,22 @@ namespace SampleFluxReactDotNet.Core.Hubs
     [HubName("ServerEventsHub")]
     public class ServerEventsHub : Hub
     {
-        public void GetLatestCommentsOnConnectAndReconnect()
+        public static void CallClientCommentsUpdated()
         {
-            Clients.Caller.CommentsUpdated(DateTimeOffset.Now);
+            var hubContext = GlobalHost.ConnectionManager.GetHubContext<ServerEventsHub>();
+            var now = DateTimeOffset.Now;
+            hubContext.Clients.All.CommentsUpdated(now);
         }
 
         public override Task OnConnected()
         {
-            GetLatestCommentsOnConnectAndReconnect();
+            CallClientCommentsUpdated();
             return base.OnConnected();
         }
 
         public override Task OnReconnected()
         {
-            GetLatestCommentsOnConnectAndReconnect();
+            CallClientCommentsUpdated();
             return base.OnReconnected();
         }
     }

@@ -1,28 +1,23 @@
 ﻿using System;
 using System.Net;
 using Autofac;
-using DotNetAppStarterKit.Core.Event;
 using EventStore.ClientAPI;
-using Microsoft.AspNet.SignalR;
 using SampleFluxReactDotNet.Core.EventStore.Interface;
 using SampleFluxReactDotNet.Core.EventStore.Stream;
 using SampleFluxReactDotNet.Core.Hubs;
-using SampleFluxReactDotNet.Core.SubscriptionEvents;
 
 namespace SampleFluxReactDotNet.Core.EventStore
 {
     public class EventStoreProxy : IEventStoreProxy
     {
-        private readonly IComponentContext _container;
-        private readonly IEventPublisher<GetCommentsHasNewDataSubscriptionEvent> _getCommentsHasNewDataSubscriptionPublisher;
         private static IEventStoreConnection _eventStoreConn;
         private static readonly object CreateConnectionLock = new object();
+        private readonly IComponentContext _container;
 
-        //public EventStoreProxy(IEventPublisher<GetCommentsHasNewDataSubscriptionEvent> getCommentsHasNewDataSubscriptionPublisher)
         public EventStoreProxy(IComponentContext container)
         {
             _container = container;
-            //_getCommentsHasNewDataSubscriptionPublisher = getCommentsHasNewDataSubscriptionPublisher;
+
             //Ensure we only set up the connection once
             lock (CreateConnectionLock)
             {
@@ -67,16 +62,14 @@ namespace SampleFluxReactDotNet.Core.EventStore
 
         private void NewCommentCreated(EventStoreSubscription sub, ResolvedEvent evt)
         {
-            var hubContext = GlobalHost.ConnectionManager.GetHubContext<ServerEventsHub>();
-            var now = DateTimeOffset.Now;
-            hubContext.Clients.All.CommentsUpdated(now);
+            ServerEventsHub.CallClientCommentsUpdated();
         }
 
-        private void NewCommentCreatedSubscriptionDropped(EventStoreSubscription sub, SubscriptionDropReason reason, Exception ex)
+        private void NewCommentCreatedSubscriptionDropped(EventStoreSubscription sub, SubscriptionDropReason reason,
+            Exception ex)
         {
             //TODO: maybe try to re-subscribe?  not sure how long to wait, whether we need multiple retries etc.. also log it..
-            //System.Threading.Thread.Sleep(2000);
-            //SubscribeToStreamNewComment();
+            SubscribeToStreamNewComment();
         }
 
         private static void EventStoreConnConnected(object sender, ClientConnectionEventArgs e)
