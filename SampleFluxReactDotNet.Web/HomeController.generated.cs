@@ -212,10 +212,10 @@ namespace SampleFluxReactDotNet.Web.Controllers
         }
 
         [NonAction]
-        partial void ToggleTodoOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, System.Guid todoId, bool complete);
+        partial void ToggleTodoOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string todoId, bool complete);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult ToggleTodo(System.Guid todoId, bool complete)
+        public override System.Web.Mvc.ActionResult ToggleTodo(string todoId, bool complete)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ToggleTodo);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "todoId", todoId);

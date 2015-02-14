@@ -47,6 +47,18 @@ namespace SampleFluxReactDotNet.Core.Query
                             TodoId = data.TodoId,
                         });
                     }
+                    else if (item is TodoCompleteToggledEvent)
+                    {
+                        var data = item as TodoCompleteToggledEvent;
+                        if (resultDict.ContainsKey(data.TodoId))
+                        {
+                            resultDict[data.TodoId].Complete = data.Complete;
+                        }
+                        else
+                        {
+                            //todo: log it - weird!!
+                        }
+                    }
                 }
             }
 

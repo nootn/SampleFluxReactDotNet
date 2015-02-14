@@ -33,11 +33,11 @@ FluxStores.TodoStore = (function() {
 
         onToggleTodo: function (payload) {
             var data = new FormData();
-            data.append('todoId', payload.todo.todoid);
-            data.append('complete', !payload.todo.complete);
+            data.append('todoId', payload.todo.TodoId);
+            data.append('complete', !payload.todo.Complete);
 
             var xhr = new XMLHttpRequest();
-            xhr.open('post', '/Home/AddTodo', true);
+            xhr.open('post', '/Home/ToggleTodo', true);
             xhr.onload = function () {
             }.bind(this);
             xhr.send(data);

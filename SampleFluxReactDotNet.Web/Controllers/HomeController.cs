@@ -13,16 +13,19 @@ namespace SampleFluxReactDotNet.Web.Controllers
         public readonly IGetComments GetCommentsQuery;
         public readonly IAddTodo AddTodoCommand;
         public readonly IGetTodos GetTodosQuery;
+        public readonly IToggleTodo ToggleTodoCommand;
 
         public HomeController(IAddComment addCommentCommand, 
             IGetComments getCommentsQuery,
             IAddTodo addTodoCommand,
-            IGetTodos getTodosQuery)
+            IGetTodos getTodosQuery,
+            IToggleTodo toggleTodoCommand)
         {
             AddCommentCommand = addCommentCommand;
             GetCommentsQuery = getCommentsQuery;
             AddTodoCommand = addTodoCommand;
             GetTodosQuery = getTodosQuery;
+            ToggleTodoCommand = toggleTodoCommand;
         }
 
         public virtual ActionResult Index()
@@ -39,6 +42,12 @@ namespace SampleFluxReactDotNet.Web.Controllers
         [HttpPost]
         public virtual ActionResult AddComment(string text)
         {
+            //Need to figure out validation
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                throw new ApplicationException("Must supply text");
+            }
+
             AddCommentCommand.Execute(text);
 
             return Content("Success :)");
@@ -53,15 +62,28 @@ namespace SampleFluxReactDotNet.Web.Controllers
         [HttpPost]
         public virtual ActionResult AddTodo(string text)
         {
+            //Need to figure out validation
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                throw new ApplicationException("Must supply text");
+            }
+
             AddTodoCommand.Execute(text);
 
             return Content("Success :)");
         }
 
         [HttpPost]
-        public virtual ActionResult ToggleTodo(Guid todoId, bool complete)
+        public virtual ActionResult ToggleTodo(string todoId, bool complete)
         {
-            //AddTodoCommand.Execute(text);
+            //Need to figure out validation
+            if (string.IsNullOrWhiteSpace(todoId))
+            {
+                throw new ApplicationException("Unable to determine todoId");
+            }
+            var id = Guid.Parse(todoId);
+
+            ToggleTodoCommand.Execute(new Tuple<Guid, bool>(id, complete));
 
             return Content("Success :)");
         }
