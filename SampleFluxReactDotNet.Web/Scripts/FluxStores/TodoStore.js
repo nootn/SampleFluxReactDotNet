@@ -4,7 +4,8 @@ FluxStores.TodoStore = (function() {
     var constants = {
         ADD_TODO: "ADD_TODO",
         TOGGLE_TODO: "TOGGLE_TODO",
-        CLEAR_TODOS: "CLEAR_TODOS"
+        CLEAR_TODOS: "CLEAR_TODOS",
+        LOAD_TODOS: "LOAD_TODOS",
     };
 
     var todoStore = Fluxxor.createStore({
@@ -14,18 +15,32 @@ FluxStores.TodoStore = (function() {
             this.bindActions(
               constants.ADD_TODO, this.onAddTodo,
               constants.TOGGLE_TODO, this.onToggleTodo,
-              constants.CLEAR_TODOS, this.onClearTodos
+              constants.CLEAR_TODOS, this.onClearTodos,
+              constants.LOAD_TODOS, this.onLoadDataFromServer
             );
         },
 
         onAddTodo: function (payload) {
-            this.todos.push({ text: payload.text, complete: false });
-            this.emit("change");
+            var data = new FormData();
+            data.append('text', payload.text);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('post', '/Home/AddTodo', true);
+            xhr.onload = function () {
+            }.bind(this);
+            xhr.send(data);
         },
 
         onToggleTodo: function (payload) {
-            payload.todo.complete = !payload.todo.complete;
-            this.emit("change");
+            var data = new FormData();
+            data.append('todoId', payload.todo.todoid);
+            data.append('complete', !payload.todo.complete);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('post', '/Home/AddTodo', true);
+            xhr.onload = function () {
+            }.bind(this);
+            xhr.send(data);
         },
 
         onClearTodos: function () {
@@ -33,6 +48,17 @@ FluxStores.TodoStore = (function() {
                 return !todo.complete;
             });
             this.emit("change");
+        },
+
+        onLoadDataFromServer: function () {
+            var xhr = new XMLHttpRequest();
+            xhr.open('get', '/Home/Todos', true);
+            xhr.onload = function () {
+                var data = JSON.parse(xhr.responseText);
+                this.todos = data;
+                this.emit("change");
+            }.bind(this);
+            xhr.send();
         },
 
         getState: function () {
@@ -53,7 +79,10 @@ FluxStores.TodoStore = (function() {
 
         clearTodos: function () {
             this.dispatch(constants.CLEAR_TODOS);
-        }
+        },
+        loadTodos: function () {
+            this.dispatch(constants.LOAD_TODOS, {});
+        },
     };
 
     //Decide what is public

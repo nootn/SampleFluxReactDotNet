@@ -72,10 +72,33 @@ namespace Links
         public static readonly string _references_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/_references.min.js") ? Url("_references.min.js") : Url("_references.js");
         public static readonly string bootstrap_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/bootstrap.min.js") ? Url("bootstrap.min.js") : Url("bootstrap.js");
         public static readonly string bootstrap_min_js = Url("bootstrap.min.js");
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class FluxStores {
+            private const string URLPATH = "~/Scripts/FluxStores";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string CommentsStore_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/CommentsStore.min.js") ? Url("CommentsStore.min.js") : Url("CommentsStore.js");
+            public static readonly string TodoStore_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/TodoStore.min.js") ? Url("TodoStore.min.js") : Url("TodoStore.js");
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class Fluxxor_1_3_2 {
+            private const string URLPATH = "~/Scripts/Fluxxor_1.3.2";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string _readme_txt = Url("_readme.txt");
+            public static readonly string fluxxor_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/fluxxor.min.js") ? Url("fluxxor.min.js") : Url("fluxxor.js");
+            public static readonly string fluxxor_js_map = Url("fluxxor.js.map");
+            public static readonly string fluxxor_min_js = Url("fluxxor.min.js");
+            public static readonly string fluxxor_min_js_map = Url("fluxxor.min.js.map");
+        }
+    
         public static readonly string jquery_1_10_2_intellisense_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.10.2.intellisense.min.js") ? Url("jquery-1.10.2.intellisense.min.js") : Url("jquery-1.10.2.intellisense.js");
         public static readonly string jquery_1_10_2_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.10.2.min.js") ? Url("jquery-1.10.2.min.js") : Url("jquery-1.10.2.js");
         public static readonly string jquery_1_10_2_min_js = Url("jquery-1.10.2.min.js");
         public static readonly string jquery_1_10_2_min_map = Url("jquery-1.10.2.min.map");
+        public static readonly string jquery_signalR_2_1_1_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.signalR-2.1.1.min.js") ? Url("jquery.signalR-2.1.1.min.js") : Url("jquery.signalR-2.1.1.js");
+        public static readonly string jquery_signalR_2_1_1_min_js = Url("jquery.signalR-2.1.1.min.js");
         public static readonly string jquery_validate_vsdoc_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.validate-vsdoc.min.js") ? Url("jquery.validate-vsdoc.min.js") : Url("jquery.validate-vsdoc.js");
         public static readonly string jquery_validate_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.validate.min.js") ? Url("jquery.validate.min.js") : Url("jquery.validate.js");
         public static readonly string jquery_validate_min_js = Url("jquery.validate.min.js");
@@ -87,11 +110,20 @@ namespace Links
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string Comments_jsx = Url("Comments.jsx");
+            public static readonly string Todo_jsx = Url("Todo.jsx");
         }
     
         public static readonly string modernizr_2_6_2_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/modernizr-2.6.2.min.js") ? Url("modernizr-2.6.2.min.js") : Url("modernizr-2.6.2.js");
         public static readonly string respond_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/respond.min.js") ? Url("respond.min.js") : Url("respond.js");
         public static readonly string respond_min_js = Url("respond.min.js");
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class ServerEvents {
+            private const string URLPATH = "~/Scripts/ServerEvents";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string HandleServerEvents_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/HandleServerEvents.min.js") ? Url("HandleServerEvents.min.js") : Url("HandleServerEvents.js");
+        }
+    
         public static readonly string showdown_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/showdown.min.js") ? Url("showdown.min.js") : Url("showdown.js");
         public static readonly string showdown_min_js = Url("showdown.min.js");
     }

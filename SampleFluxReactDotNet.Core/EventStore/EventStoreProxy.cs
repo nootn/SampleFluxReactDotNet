@@ -2,8 +2,8 @@
 using System.Net;
 using Autofac;
 using EventStore.ClientAPI;
+using SampleFluxReactDotNet.Core.EventStore.Event;
 using SampleFluxReactDotNet.Core.EventStore.Interface;
-using SampleFluxReactDotNet.Core.EventStore.Stream;
 using SampleFluxReactDotNet.Core.Hubs;
 
 namespace SampleFluxReactDotNet.Core.EventStore
@@ -35,7 +35,8 @@ namespace SampleFluxReactDotNet.Core.EventStore
                     _eventStoreConn.Connected += EventStoreConnConnected;
                     _eventStoreConn.ConnectAsync().Wait();
 
-                    SubscribeToStreamNewComment();
+                    SubscribeToStreamComment();
+                    SubscribeToStreamTodo();
                 }
             }
         }
@@ -53,24 +54,42 @@ namespace SampleFluxReactDotNet.Core.EventStore
             return _eventStoreConn.ReadStreamEventsForwardAsync(streamName, start, count, false).Result;
         }
 
-        private void SubscribeToStreamNewComment()
+        private void SubscribeToStreamComment()
         {
-            _eventStoreConn.SubscribeToStreamAsync(CommentCreatedEvent.StreamName, false,
-                NewCommentCreated,
-                NewCommentCreatedSubscriptionDropped);
+            _eventStoreConn.SubscribeToStreamAsync(Streams.CommentStreamName, false,
+                CommentChanged,
+                CommentChangedSubscriptionDropped);
         }
 
-        private void NewCommentCreated(EventStoreSubscription sub, ResolvedEvent evt)
+        private void CommentChanged(EventStoreSubscription sub, ResolvedEvent evt)
         {
             ServerEventsHub.CallClientCommentsUpdated();
         }
 
-        private void NewCommentCreatedSubscriptionDropped(EventStoreSubscription sub, SubscriptionDropReason reason,
+        private void CommentChangedSubscriptionDropped(EventStoreSubscription sub, SubscriptionDropReason reason,
             Exception ex)
         {
-            //TODO: maybe try to re-subscribe?  not sure how long to wait, whether we need multiple retries etc.. also log it..
-            SubscribeToStreamNewComment();
+            SubscribeToStreamComment();
         }
+
+        private void SubscribeToStreamTodo()
+        {
+            _eventStoreConn.SubscribeToStreamAsync(Streams.TodoStreamName, false,
+                TodoChanged,
+                TodoChangedSubscriptionDropped);
+        }
+
+        private void TodoChanged(EventStoreSubscription sub, ResolvedEvent evt)
+        {
+            ServerEventsHub.CallClientTodosUpdated();
+        }
+
+        private void TodoChangedSubscriptionDropped(EventStoreSubscription sub, SubscriptionDropReason reason,
+            Exception ex)
+        {
+            SubscribeToStreamTodo();
+        }
+
 
         private static void EventStoreConnConnected(object sender, ClientConnectionEventArgs e)
         {

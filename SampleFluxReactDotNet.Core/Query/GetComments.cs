@@ -2,8 +2,8 @@
 using DotNetAppStarterKit.Core.Query;
 using EventStore.ClientAPI;
 using SampleFluxReactDotNet.Core.EventStore;
+using SampleFluxReactDotNet.Core.EventStore.Event;
 using SampleFluxReactDotNet.Core.EventStore.Interface;
-using SampleFluxReactDotNet.Core.EventStore.Stream;
 using SampleFluxReactDotNet.Core.Query.Interface;
 using SampleFluxReactDotNet.Core.View.Comment;
 
@@ -26,7 +26,7 @@ namespace SampleFluxReactDotNet.Core.Query
             };
 
             var slice =
-                EventStore.ReadStreamEventsForward(CommentCreatedEvent.StreamName, StreamPosition.Start, int.MaxValue);
+                EventStore.ReadStreamEventsForward(Streams.CommentStreamName, StreamPosition.Start, int.MaxValue);
             foreach (var currEvent in slice.Events)
             {
                 var item = ManipulateEvent.DeserializeEvent(currEvent.OriginalEvent.Metadata,

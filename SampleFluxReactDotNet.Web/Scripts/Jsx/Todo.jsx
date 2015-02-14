@@ -7,6 +7,7 @@ Jsx.Todo = (function () {
         addTodo: FluxStores.TodoStore.actions.addTodo,
         toggleTodo: FluxStores.TodoStore.actions.toggleTodo,
         clearTodos: FluxStores.TodoStore.actions.clearTodos,
+        loadTodos: FluxStores.TodoStore.actions.loadTodos,
     };
 
     var stores = {
@@ -84,10 +85,10 @@ Jsx.Todo = (function () {
 
         render: function() {
             var style = {
-                textDecoration: this.props.todo.complete ? "line-through" : ""
+                textDecoration: this.props.todo.Complete ? "line-through" : ""
             };
 
-            return <span style={style} onClick={this.onClick}>{this.props.todo.text}</span>;
+            return <span style={style} onClick={this.onClick}>{this.props.todo.Text}</span>;
         },
 
         onClick: function() {

@@ -1,10 +1,14 @@
 ﻿$(function () {
 
-    //Handle comments
+    //Handle server calls
     var hub = $.connection.ServerEventsHub;
     hub.client.commentsUpdated = function (at) {
         console.log("commentsUpdated called from server");
         Jsx.Comments.flux.actions.loadComments();
+    };
+    hub.client.todosUpdated = function (at) {
+        console.log("todosUpdated called from server");
+        Jsx.Todo.flux.actions.loadTodos();
     };
 
     //Connection events

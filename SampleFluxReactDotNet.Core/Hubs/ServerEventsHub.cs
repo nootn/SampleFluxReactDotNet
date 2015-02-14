@@ -15,15 +15,24 @@ namespace SampleFluxReactDotNet.Core.Hubs
             hubContext.Clients.All.CommentsUpdated(now);
         }
 
+        public static void CallClientTodosUpdated()
+        {
+            var hubContext = GlobalHost.ConnectionManager.GetHubContext<ServerEventsHub>();
+            var now = DateTimeOffset.Now;
+            hubContext.Clients.All.TodosUpdated(now);
+        }
+
         public override Task OnConnected()
         {
             CallClientCommentsUpdated();
+            CallClientTodosUpdated();
             return base.OnConnected();
         }
 
         public override Task OnReconnected()
         {
             CallClientCommentsUpdated();
+            CallClientTodosUpdated();
             return base.OnReconnected();
         }
     }

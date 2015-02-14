@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Linq;
+using System.Web.Mvc;
 using SampleFluxReactDotNet.Core.Command.Interface;
 using SampleFluxReactDotNet.Core.Query.Interface;
 using SampleFluxReactDotNet.Web.Models;
@@ -9,11 +11,18 @@ namespace SampleFluxReactDotNet.Web.Controllers
     {
         public readonly IAddComment AddCommentCommand;
         public readonly IGetComments GetCommentsQuery;
+        public readonly IAddTodo AddTodoCommand;
+        public readonly IGetTodos GetTodosQuery;
 
-        public HomeController(IAddComment addCommentCommand, IGetComments getCommentsQuery)
+        public HomeController(IAddComment addCommentCommand, 
+            IGetComments getCommentsQuery,
+            IAddTodo addTodoCommand,
+            IGetTodos getTodosQuery)
         {
             AddCommentCommand = addCommentCommand;
             GetCommentsQuery = getCommentsQuery;
+            AddTodoCommand = addTodoCommand;
+            GetTodosQuery = getTodosQuery;
         }
 
         public virtual ActionResult Index()
@@ -28,14 +37,31 @@ namespace SampleFluxReactDotNet.Web.Controllers
         }
 
         [HttpPost]
-        public virtual ActionResult AddComment(CommentModel comment)
+        public virtual ActionResult AddComment(string text)
         {
-            AddCommentCommand.Execute(comment.Text);
+            AddCommentCommand.Execute(text);
 
-            ////todo: this will move to when the stream is updated..
-            //var hubContext = GlobalHost.ConnectionManager.GetHubContext<ServerEventsHub>();
-            //var now = DateTimeOffset.Now;
-            //hubContext.Clients.All.CommentsUpdated(now);
+            return Content("Success :)");
+        }
+
+        public virtual ActionResult Todos()
+        {
+            var item = GetTodosQuery.ExecuteCached() ?? GetTodosQuery.Execute();
+            return Json(item.TodoDetails, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public virtual ActionResult AddTodo(string text)
+        {
+            AddTodoCommand.Execute(text);
+
+            return Content("Success :)");
+        }
+
+        [HttpPost]
+        public virtual ActionResult ToggleTodo(Guid todoId, bool complete)
+        {
+            //AddTodoCommand.Execute(text);
 
             return Content("Success :)");
         }

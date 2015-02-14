@@ -76,22 +76,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Command\AddTodo.cs" />
     <Compile Include="Command\AddComment.cs" />
+    <Compile Include="Command\Interface\IAddTodo.cs" />
     <Compile Include="Command\Interface\IAddComment.cs" />
     <Compile Include="EventStore\EventStoreProxy.cs" />
     <Compile Include="EventStore\Interface\IEventStoreProxy.cs" />
+    <Compile Include="EventStore\Event\TodoCreatedEvent.cs" />
+    <Compile Include="EventStore\Streams.cs" />
     <Compile Include="Hubs\ServerEventsHub.cs" />
+    <Compile Include="Query\GetTodos.cs" />
     <Compile Include="Query\GetComments.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Query\Interface\IGetTodos.cs" />
     <Compile Include="Query\Interface\IGetComments.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="EventStore\ManipulateEvent.cs" />
-    <Compile Include="EventStore\Stream\CommentCreatedEvent.cs" />
+    <Compile Include="EventStore\Event\CommentCreatedEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\Comment\CommentDetailView.cs" />
     <Compile Include="View\Comment\CommentListView.cs" />
+    <Compile Include="View\Todo\TodoDetailView.cs" />
+    <Compile Include="View\Todo\TodoListView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -26,9 +26,6 @@ namespace SampleFluxReactDotNet.Web.Controllers
     public partial class HomeController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public HomeController() { }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected HomeController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -63,6 +60,18 @@ namespace SampleFluxReactDotNet.Web.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddComment);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult AddTodo()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddTodo);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult ToggleTodo()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ToggleTodo);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public HomeController Actions { get { return MVC.Home; } }
@@ -82,6 +91,9 @@ namespace SampleFluxReactDotNet.Web.Controllers
             public readonly string Index = "Index";
             public readonly string Comments = "Comments";
             public readonly string AddComment = "AddComment";
+            public readonly string Todos = "Todos";
+            public readonly string AddTodo = "AddTodo";
+            public readonly string ToggleTodo = "ToggleTodo";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -90,6 +102,9 @@ namespace SampleFluxReactDotNet.Web.Controllers
             public const string Index = "Index";
             public const string Comments = "Comments";
             public const string AddComment = "AddComment";
+            public const string Todos = "Todos";
+            public const string AddTodo = "AddTodo";
+            public const string ToggleTodo = "ToggleTodo";
         }
 
 
@@ -99,7 +114,24 @@ namespace SampleFluxReactDotNet.Web.Controllers
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionParamsClass_AddComment
         {
-            public readonly string comment = "comment";
+            public readonly string text = "text";
+        }
+        static readonly ActionParamsClass_AddTodo s_params_AddTodo = new ActionParamsClass_AddTodo();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_AddTodo AddTodoParams { get { return s_params_AddTodo; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_AddTodo
+        {
+            public readonly string text = "text";
+        }
+        static readonly ActionParamsClass_ToggleTodo s_params_ToggleTodo = new ActionParamsClass_ToggleTodo();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ToggleTodo ToggleTodoParams { get { return s_params_ToggleTodo; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ToggleTodo
+        {
+            public readonly string todoId = "todoId";
+            public readonly string complete = "complete";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -111,12 +143,8 @@ namespace SampleFluxReactDotNet.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string About = "About";
-                public readonly string Contact = "Contact";
                 public readonly string Index = "Index";
             }
-            public readonly string About = "~/Views/Home/About.cshtml";
-            public readonly string Contact = "~/Views/Home/Contact.cshtml";
             public readonly string Index = "~/Views/Home/Index.cshtml";
         }
     }
@@ -149,14 +177,50 @@ namespace SampleFluxReactDotNet.Web.Controllers
         }
 
         [NonAction]
-        partial void AddCommentOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, SampleFluxReactDotNet.Web.Models.CommentModel comment);
+        partial void AddCommentOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string text);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult AddComment(SampleFluxReactDotNet.Web.Models.CommentModel comment)
+        public override System.Web.Mvc.ActionResult AddComment(string text)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddComment);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "comment", comment);
-            AddCommentOverride(callInfo, comment);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "text", text);
+            AddCommentOverride(callInfo, text);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void TodosOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Todos()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Todos);
+            TodosOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void AddTodoOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string text);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult AddTodo(string text)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.AddTodo);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "text", text);
+            AddTodoOverride(callInfo, text);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void ToggleTodoOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, System.Guid todoId, bool complete);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ToggleTodo(System.Guid todoId, bool complete)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ToggleTodo);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "todoId", todoId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "complete", complete);
+            ToggleTodoOverride(callInfo, todoId, complete);
             return callInfo;
         }
 
