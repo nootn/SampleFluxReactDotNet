@@ -3,29 +3,31 @@ using System.Linq;
 using System.Web.Mvc;
 using SampleFluxReactDotNet.Core.Command.Interface;
 using SampleFluxReactDotNet.Core.Query.Interface;
-using SampleFluxReactDotNet.Web.Models;
 
 namespace SampleFluxReactDotNet.Web.Controllers
 {
     public partial class HomeController : Controller
     {
         public readonly IAddComment AddCommentCommand;
-        public readonly IGetComments GetCommentsQuery;
         public readonly IAddTodo AddTodoCommand;
+        public readonly IGetComments GetCommentsQuery;
         public readonly IGetTodos GetTodosQuery;
         public readonly IToggleTodo ToggleTodoCommand;
+        public readonly IClearTodos ClearTodosCommand;
 
-        public HomeController(IAddComment addCommentCommand, 
+        public HomeController(IAddComment addCommentCommand,
             IGetComments getCommentsQuery,
             IAddTodo addTodoCommand,
             IGetTodos getTodosQuery,
-            IToggleTodo toggleTodoCommand)
+            IToggleTodo toggleTodoCommand,
+            IClearTodos clearTodosCommand)
         {
             AddCommentCommand = addCommentCommand;
             GetCommentsQuery = getCommentsQuery;
             AddTodoCommand = addTodoCommand;
             GetTodosQuery = getTodosQuery;
             ToggleTodoCommand = toggleTodoCommand;
+            ClearTodosCommand = clearTodosCommand;
         }
 
         public virtual ActionResult Index()
@@ -84,6 +86,21 @@ namespace SampleFluxReactDotNet.Web.Controllers
             var id = Guid.Parse(todoId);
 
             ToggleTodoCommand.Execute(new Tuple<Guid, bool>(id, complete));
+
+            return Content("Success :)");
+        }
+
+        [HttpPost]
+        public virtual ActionResult ClearCompletedTodos(string todoIds)
+        {
+            if (!string.IsNullOrWhiteSpace(todoIds))
+            {
+                var ids = todoIds.Split(new []{','}, StringSplitOptions.RemoveEmptyEntries);
+                if (ids.Any())
+                {
+                    ClearTodosCommand.Execute(ids.Select(Guid.Parse).ToArray());
+                }
+            }
 
             return Content("Success :)");
         }

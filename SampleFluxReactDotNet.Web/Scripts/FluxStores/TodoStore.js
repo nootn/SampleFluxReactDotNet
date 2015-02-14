@@ -44,10 +44,22 @@ FluxStores.TodoStore = (function() {
         },
 
         onClearTodos: function () {
-            this.todos = this.todos.filter(function (todo) {
-                return !todo.complete;
-            });
-            this.emit("change");
+            var completedIds = [];
+            for (var i = 0; i < this.todos.length; i++) {
+                var currTodo = this.todos[i];
+                if (currTodo.Complete) {
+                    completedIds.push(currTodo.TodoId);
+                }
+            }
+
+            var data = new FormData();
+            data.append('todoIds', completedIds);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('post', '/Home/ClearCompletedTodos', true);
+            xhr.onload = function () {
+            }.bind(this);
+            xhr.send(data);
         },
 
         onLoadDataFromServer: function () {

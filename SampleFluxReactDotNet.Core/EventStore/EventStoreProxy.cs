@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using Autofac;
 using EventStore.ClientAPI;
@@ -47,6 +48,20 @@ namespace SampleFluxReactDotNet.Core.EventStore
             var data = ManipulateEvent.ToEventData(id, evnt, null);
             _eventStoreConn.AppendToStreamAsync(streamName, ExpectedVersion.Any, data).Wait();
             return id;
+        }
+
+        public ICollection<Guid> AppendMultipleToStream(string streamName, ICollection<object> evnts)
+        {
+            var ids = new List<Guid>();
+            var datas = new List<EventData>();
+            foreach (var currEvent in evnts)
+            {
+                var newId = Guid.NewGuid();
+                datas.Add(ManipulateEvent.ToEventData(newId, currEvent, null));
+                ids.Add(newId);
+            }
+            _eventStoreConn.AppendToStreamAsync(streamName, ExpectedVersion.Any, datas.ToArray()).Wait();
+            return ids;
         }
 
         public StreamEventsSlice ReadStreamEventsForward(string streamName, int start, int count)

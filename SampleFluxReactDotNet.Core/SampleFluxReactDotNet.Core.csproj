@@ -76,6 +76,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Command\Interface\IClearTodos.cs" />
+    <Compile Include="Command\ClearTodos.cs" />
     <Compile Include="Command\ToggleTodo.cs" />
     <Compile Include="Command\AddTodo.cs" />
     <Compile Include="Command\AddComment.cs" />
@@ -84,6 +86,7 @@
     <Compile Include="Command\Interface\IAddComment.cs" />
     <Compile Include="EventStore\EventStoreProxy.cs" />
     <Compile Include="EventStore\Event\TodoCompleteToggledEvent.cs" />
+    <Compile Include="EventStore\Event\TodoClearedEvent.cs" />
     <Compile Include="EventStore\Interface\IEventStoreProxy.cs" />
     <Compile Include="EventStore\Event\TodoCreatedEvent.cs" />
     <Compile Include="EventStore\Streams.cs" />
