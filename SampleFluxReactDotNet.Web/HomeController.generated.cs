@@ -4,7 +4,8 @@
 // to the .tt file (i.e. the T4 template) and save it to regenerate this file.
 
 // Make sure the compiler doesn't complain about missing Xml comments and CLS compliance
-#pragma warning disable 1591, 3008, 3009
+// 0108: suppress "Foo hides inherited member Foo. Use the new keyword if hiding was intended." when a controller and its abstract parent are both processed
+#pragma warning disable 1591, 3008, 3009, 0108
 #region T4MVC
 
 using System;
@@ -72,6 +73,12 @@ namespace SampleFluxReactDotNet.Web.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ToggleTodo);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.ActionResult ClearCompletedTodos()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ClearCompletedTodos);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public HomeController Actions { get { return MVC.Home; } }
@@ -94,6 +101,7 @@ namespace SampleFluxReactDotNet.Web.Controllers
             public readonly string Todos = "Todos";
             public readonly string AddTodo = "AddTodo";
             public readonly string ToggleTodo = "ToggleTodo";
+            public readonly string ClearCompletedTodos = "ClearCompletedTodos";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -105,6 +113,7 @@ namespace SampleFluxReactDotNet.Web.Controllers
             public const string Todos = "Todos";
             public const string AddTodo = "AddTodo";
             public const string ToggleTodo = "ToggleTodo";
+            public const string ClearCompletedTodos = "ClearCompletedTodos";
         }
 
 
@@ -132,6 +141,14 @@ namespace SampleFluxReactDotNet.Web.Controllers
         {
             public readonly string todoId = "todoId";
             public readonly string complete = "complete";
+        }
+        static readonly ActionParamsClass_ClearCompletedTodos s_params_ClearCompletedTodos = new ActionParamsClass_ClearCompletedTodos();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ClearCompletedTodos ClearCompletedTodosParams { get { return s_params_ClearCompletedTodos; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ClearCompletedTodos
+        {
+            public readonly string todoIds = "todoIds";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -224,8 +241,20 @@ namespace SampleFluxReactDotNet.Web.Controllers
             return callInfo;
         }
 
+        [NonAction]
+        partial void ClearCompletedTodosOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string todoIds);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ClearCompletedTodos(string todoIds)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ClearCompletedTodos);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "todoIds", todoIds);
+            ClearCompletedTodosOverride(callInfo, todoIds);
+            return callInfo;
+        }
+
     }
 }
 
 #endregion T4MVC
-#pragma warning restore 1591, 3008, 3009
+#pragma warning restore 1591, 3008, 3009, 0108

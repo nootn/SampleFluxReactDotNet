@@ -4,7 +4,8 @@
 // to the .tt file (i.e. the T4 template) and save it to regenerate this file.
 
 // Make sure the compiler doesn't complain about missing Xml comments and CLS compliance
-#pragma warning disable 1591, 3008, 3009
+// 0108: suppress "Foo hides inherited member Foo. Use the new keyword if hiding was intended." when a controller and its abstract parent are both processed
+#pragma warning disable 1591, 3008, 3009, 0108
 #region T4MVC
 
 using System;
@@ -97,8 +98,8 @@ namespace Links
         public static readonly string jquery_1_10_2_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.10.2.min.js") ? Url("jquery-1.10.2.min.js") : Url("jquery-1.10.2.js");
         public static readonly string jquery_1_10_2_min_js = Url("jquery-1.10.2.min.js");
         public static readonly string jquery_1_10_2_min_map = Url("jquery-1.10.2.min.map");
-        public static readonly string jquery_signalR_2_1_1_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.signalR-2.1.1.min.js") ? Url("jquery.signalR-2.1.1.min.js") : Url("jquery.signalR-2.1.1.js");
-        public static readonly string jquery_signalR_2_1_1_min_js = Url("jquery.signalR-2.1.1.min.js");
+        public static readonly string jquery_signalR_2_2_0_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.signalR-2.2.0.min.js") ? Url("jquery.signalR-2.2.0.min.js") : Url("jquery.signalR-2.2.0.js");
+        public static readonly string jquery_signalR_2_2_0_min_js = Url("jquery.signalR-2.2.0.min.js");
         public static readonly string jquery_validate_vsdoc_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.validate-vsdoc.min.js") ? Url("jquery.validate-vsdoc.min.js") : Url("jquery.validate-vsdoc.js");
         public static readonly string jquery_validate_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.validate.min.js") ? Url("jquery.validate.min.js") : Url("jquery.validate.js");
         public static readonly string jquery_validate_min_js = Url("jquery.validate.min.js");
@@ -113,7 +114,7 @@ namespace Links
             public static readonly string Todo_jsx = Url("Todo.jsx");
         }
     
-        public static readonly string modernizr_2_6_2_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/modernizr-2.6.2.min.js") ? Url("modernizr-2.6.2.min.js") : Url("modernizr-2.6.2.js");
+        public static readonly string modernizr_2_8_3_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/modernizr-2.8.3.min.js") ? Url("modernizr-2.8.3.min.js") : Url("modernizr-2.8.3.js");
         public static readonly string respond_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/respond.min.js") ? Url("respond.min.js") : Url("respond.js");
         public static readonly string respond_min_js = Url("respond.min.js");
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -140,13 +141,71 @@ namespace Links
              
     }
 
+    
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
     public static partial class Bundles
     {
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public static partial class Scripts {}
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public static partial class Styles {}
+        public static partial class Scripts 
+        {
+            public static partial class FluxStores 
+            {
+                public static class Assets
+                {
+                    public const string CommentsStore_js = "~/Scripts/FluxStores/CommentsStore.js"; 
+                    public const string TodoStore_js = "~/Scripts/FluxStores/TodoStore.js"; 
+                }
+            }
+            public static partial class Fluxxor_1_3_2 
+            {
+                public static class Assets
+                {
+                    public const string fluxxor_js = "~/Scripts/Fluxxor_1.3.2/fluxxor.js"; 
+                    public const string fluxxor_min_js = "~/Scripts/Fluxxor_1.3.2/fluxxor.min.js"; 
+                }
+            }
+            public static partial class Jsx 
+            {
+                public static class Assets
+                {
+                }
+            }
+            public static partial class ServerEvents 
+            {
+                public static class Assets
+                {
+                    public const string HandleServerEvents_js = "~/Scripts/ServerEvents/HandleServerEvents.js"; 
+                }
+            }
+            public static class Assets
+            {
+                public const string _references_js = "~/Scripts/_references.js"; 
+                public const string bootstrap_js = "~/Scripts/bootstrap.js"; 
+                public const string bootstrap_min_js = "~/Scripts/bootstrap.min.js"; 
+                public const string jquery_1_10_2_intellisense_js = "~/Scripts/jquery-1.10.2.intellisense.js"; 
+                public const string jquery_1_10_2_js = "~/Scripts/jquery-1.10.2.js"; 
+                public const string jquery_1_10_2_min_js = "~/Scripts/jquery-1.10.2.min.js"; 
+                public const string jquery_signalR_2_2_0_js = "~/Scripts/jquery.signalR-2.2.0.js"; 
+                public const string jquery_signalR_2_2_0_min_js = "~/Scripts/jquery.signalR-2.2.0.min.js"; 
+                public const string jquery_validate_js = "~/Scripts/jquery.validate.js"; 
+                public const string jquery_validate_min_js = "~/Scripts/jquery.validate.min.js"; 
+                public const string jquery_validate_unobtrusive_js = "~/Scripts/jquery.validate.unobtrusive.js"; 
+                public const string jquery_validate_unobtrusive_min_js = "~/Scripts/jquery.validate.unobtrusive.min.js"; 
+                public const string modernizr_2_8_3_js = "~/Scripts/modernizr-2.8.3.js"; 
+                public const string respond_js = "~/Scripts/respond.js"; 
+                public const string respond_min_js = "~/Scripts/respond.min.js"; 
+                public const string showdown_js = "~/Scripts/showdown.js"; 
+                public const string showdown_min_js = "~/Scripts/showdown.min.js"; 
+            }
+        }
+        public static partial class Content 
+        {
+            public static class Assets
+            {
+                public const string bootstrap_css = "~/Content/bootstrap.css";
+                public const string bootstrap_min_css = "~/Content/bootstrap.min.css";
+                public const string Site_css = "~/Content/Site.css";
+            }
+        }
     }
 }
 
@@ -180,6 +239,6 @@ internal static class T4MVCHelpers {
 
 
 #endregion T4MVC
-#pragma warning restore 1591, 3008, 3009
+#pragma warning restore 1591, 3008, 3009, 0108
 
 
