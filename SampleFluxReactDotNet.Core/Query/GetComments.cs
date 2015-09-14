@@ -26,7 +26,7 @@ namespace SampleFluxReactDotNet.Core.Query
             };
 
             var slice =
-                EventStore.ReadStreamEventsForward(Streams.CommentStreamName, StreamPosition.Start, int.MaxValue);
+                EventStore.ReadStreamEventsForward(Streams.CommentStreamName, StreamPosition.Start);
             foreach (var currEvent in slice.Events)
             {
                 var item = ManipulateEvent.DeserializeEvent(currEvent.OriginalEvent.Metadata,

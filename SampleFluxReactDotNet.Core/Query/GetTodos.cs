@@ -27,7 +27,7 @@ namespace SampleFluxReactDotNet.Core.Query
             var resultDict = new Dictionary<Guid, TodoDetailView>();
 
             var slice =
-                EventStore.ReadStreamEventsForward(TodoCreatedEvent.StreamName, StreamPosition.Start, int.MaxValue);
+                EventStore.ReadStreamEventsForward(TodoCreatedEvent.StreamName, StreamPosition.Start);
             foreach (var currEvent in slice.Events)
             {
                 var item = ManipulateEvent.DeserializeEvent(currEvent.OriginalEvent.Metadata,

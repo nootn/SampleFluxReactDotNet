@@ -92,6 +92,7 @@
     <Compile Include="Command\Interface\IToggleTodo.cs" />
     <Compile Include="Command\Interface\IAddTodo.cs" />
     <Compile Include="Command\Interface\IAddComment.cs" />
+    <Compile Include="EventStore\EventStoreConstants.cs" />
     <Compile Include="EventStore\EventStoreProxy.cs" />
     <Compile Include="EventStore\Event\TodoCompleteToggledEvent.cs" />
     <Compile Include="EventStore\Event\TodoClearedEvent.cs" />

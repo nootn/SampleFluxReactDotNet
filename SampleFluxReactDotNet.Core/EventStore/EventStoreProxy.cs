@@ -11,6 +11,8 @@ namespace SampleFluxReactDotNet.Core.EventStore
 {
     public class EventStoreProxy : IEventStoreProxy
     {
+        
+
         private static IEventStoreConnection _eventStoreConn;
         private static readonly object CreateConnectionLock = new object();
         private readonly IComponentContext _container;
@@ -66,6 +68,10 @@ namespace SampleFluxReactDotNet.Core.EventStore
 
         public StreamEventsSlice ReadStreamEventsForward(string streamName, int start, int count)
         {
+            if (count > EventStoreConstants.EventStoreMaxReadItems)
+            {
+                throw new ApplicationException(string.Format("Only able to read a maximum of '{0}' events at a time", EventStoreConstants.EventStoreMaxReadItems));
+            }
             return _eventStoreConn.ReadStreamEventsForwardAsync(streamName, start, count, false).Result;
         }
 

@@ -10,6 +10,6 @@ namespace SampleFluxReactDotNet.Core.EventStore.Interface
 
         ICollection<Guid> AppendMultipleToStream(string streamName, ICollection<object> evnts);
 
-        StreamEventsSlice ReadStreamEventsForward(string streamName, int start, int count);
+        StreamEventsSlice ReadStreamEventsForward(string streamName, int start, int count = EventStoreConstants.EventStoreMaxReadItems);
     }
 }
